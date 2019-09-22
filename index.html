@@ -1,177 +1,149 @@
 <!DOCTYPE html>
 <html>
-  
+
   <head>
+  
+    <!-- METAMFETAMINA... -->
     <meta name="google-signin-client_id" content="911501730838-bs4m99gglnc6568ds4teu3pl2g6mi63v.apps.googleusercontent.com">
-    <title>Czat z google sheets</title>
     <meta charset="utf-8" />
- 
-    <style>
     
-    body{
-      padding: 0;
-      margin-left: 150px;
+    <!-- LINA DO CSKA -->
+    <link href="main.css" rel="stylesheet" type="text/css">
 
-    }
 
-    h1{
-      font-size: 55px;
-      margin-left: 200px;
-    }
-#chat_main
-{
-
-  width: 700px;
-  height: 525px;
-}
-#chat_text
-{
-  width: 100%;
-  background-color: rgb(189, 189, 189);
-  height: 500px;
-
-}
-    #message_field
-    {
-      padding: 0;
-      margin: 0;
-      height: 25px;
-      width: 540px;
-    }
-    #name_field
-    {
-      padding: 0;
-      margin: 0;
-      width: 100px;
-      height: 25px;
-    }
-    #send_button{
-      padding: 0;
-      margin: 0;
-      width: 40px;
-      height: 25px;
-    }
-    </style>
- 
+    <!-- TYTULIK <3 -->
+    <title>Google Spreadsheets Chat</title>
   </head>
-  
   <body>
-    <h1> Czat </h1>
 
+    <!-- LOGIN WINDOW -->
+    <div id="login_background">
+     
+      <div id="login_window"> 
+     
+        <input id="name_field" type="text" name="name" value="Anonymus">
+        <img id="authorize_button"> 
+      </div>
+    </div>
+
+
+
+    <!-- LEFT -->
+    <div class="left_bar">
+
+      <!-- NAZWY POKOI -->
+      <div class="room_name"> <h3 id="room_name">Room #1</h3> </div>
+      
+
+      <!-- LISTA POKOI -->
+      <div class="room_list"> 
+
+        <h4 onclick="ChangeRoom(1);"> Room #1 </h4>  
+        <h4 onclick="ChangeRoom(2);"> Room #2 </h4> 
+        <h4 onclick="ChangeRoom(3);"> Room #3 </h4> 
+        <h4 onclick="ChangeRoom(4);"> Room #4 </h4> 
+      </div>
+    </div>
+
+    <!-- CHAT -->
     <div id="chat_main">
-      <div id="chat_text"></div>
 
+      <!-- DIV NA TEKST -->
+      <div id="chat_text"> </div>
+      
 
+      <!-- WYSYŁANKO -->
+      <textarea id="message_field" type="text" name="name"></textarea>
+      <button id="send_button" onclick="Send();">Send</button>
+    </div>
   
 
 
-    <input id="message_field" type="text" name="name">
-    <input id="name_field" type="text" name="name">
-    <button id="send_button" onclick="Send();">send</button>
-    <pre id="content" style="white-space: pre-wrap;"></pre>
-  </div>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-
-    <button id="authorize_button" style="display: none;">Authorize</button>
-    <button id="signout_button" style="display: none;">Sign Out</button>
+    <!-- SCRIPTS, SCRIPTOS, SCRIPTINTOS??? -->
+    <pre id="content" style="white-space: pre-wrap;"> </pre>
+    <script src="https://apis.google.com/js/platform.js" async defer> </script>
     <script type="text/javascript">
-   
-   
+         
+      //#region I copped it from Goole Website and I don't know what is happening here >:L
       
-   
-      // Client ID and API key from the Developer Console
-      var CLIENT_ID = '911501730838-bs4m99gglnc6568ds4teu3pl2g6mi63v.apps.googleusercontent.com';
-      var API_KEY = 'AIzaSyAKTVIb-0x3YM-5WomvHfgbndtVeRDUYQE';
+        // Client ID and API key from the Developer Console
+        var CLIENT_ID = '911501730838-bs4m99gglnc6568ds4teu3pl2g6mi63v.apps.googleusercontent.com';
+        var API_KEY = 'AIzaSyAKTVIb-0x3YM-5WomvHfgbndtVeRDUYQE';
 
-      // Array of API discovery doc URLs for APIs used by the quickstart
-      var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
+        // Array of API discovery doc URLs for APIs used by the quickstart
+        var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
 
-      // Authorization scopes required by the API; multiple scopes can be
-      // included, separated by spaces.
-      var SCOPES = "https://www.googleapis.com/auth/spreadsheets";
+        // Authorization scopes required by the API; multiple scopes can be
+        // included, separated by spaces.
+        var SCOPES = "https://www.googleapis.com/auth/spreadsheets";
 
-      var authorizeButton = document.getElementById('authorize_button');
-      var signoutButton = document.getElementById('signout_button');
+        // Authorize button...
+        var authorizeButton = document.getElementById('authorize_button');
 
-      /**
-       *  On load, called to load the auth2 library and API client library.
-       */
-      function handleClientLoad() {
+
+        // Load liblary...
+        function handleClientLoad() 
+      {
+      
         gapi.load('client:auth2', initClient);
       }
 
-      /**
-       *  Initializes the API client library and sets up sign-in state
-       *  listeners.
-       */
-      function initClient() {
-        gapi.client.init({
-          apiKey: API_KEY,
-          clientId: CLIENT_ID,
-          discoveryDocs: DISCOVERY_DOCS,
-          scope: SCOPES
-        }).then(function () {
-          // Listen for sign-in state changes.
-          gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+        // Set up sign in state...
+        function initClient() 
+        {
+          
+          gapi.client.init({apiKey: API_KEY, clientId: CLIENT_ID, discoveryDocs: DISCOVERY_DOCS, scope: SCOPES}).then(function () 
+          {
+           
+            // Listen for sign-in state changes.
+            gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
-          // Handle the initial sign-in state.
-          updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-          authorizeButton.onclick = handleAuthClick;
-          signoutButton.onclick = handleSignoutClick;
-        }, function(error) {
-          appendPre(JSON.stringify(error, null, 2));
-        });
+            // Handle the initial sign-in state.
+            updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+            authorizeButton.onclick = handleAuthClick;
+          }, 
+          
+        function(error){});
       }
 
-      /**
-       *  Called when the signed in status changes, to update the UI
-       *  appropriately. After a sign-in, the API is called.
-       */
-      function updateSigninStatus(isSignedIn) {
-        if (isSignedIn) {
-          authorizeButton.style.display = 'none';
-          signoutButton.style.display = 'block';
-          Start();
-        } else {
-          authorizeButton.style.display = 'block';
-          signoutButton.style.display = 'none';
+
+
+        // Sign In things...
+        function updateSigninStatus(isSignedIn) 
+        {
+          
+          if (isSignedIn)   
+          {
+  
+            authorizeButton.style.display = 'none';
+            document.getElementById("login_background").style.display = 'none';
+
+            Start();
+          }
+          else
+          {
+          
+            authorizeButton.style.display = 'block';
+            document.getElementById("login_background").style.display = 'block';
+          }
         }
-      }
+        function handleAuthClick(event) 
+        {
+          
+          gapi.auth2.getAuthInstance().signIn();
+        }
+      //#endregion
 
-      /**
-       *  Sign in the user upon button click.
-       */
-      function handleAuthClick(event) {
-        gapi.auth2.getAuthInstance().signIn();
-      }
 
-      /**
-       *  Sign out the user upon button click.
-       */
-      function handleSignoutClick(event) {
-        gapi.auth2.getAuthInstance().signOut();
-      }
+      // Room ID...  
+      var roomID = 1;
+      
+      
+      // Start Chat...
+      function Start()
+      {
 
-      /**
-       * Append a pre element to the body containing the given message
-       * as its text node. Used to display the results of the API call.
-       *
-       * @param {string} message Text to be placed in pre element.
-       */
-      function appendPre(message) {
-        var pre = document.getElementById('content');
-        var textContent = document.createTextNode(message + '\n');
-        pre.appendChild(textContent);
-      }
-
-      /**
-       * Print the names and majors of students in a sample spreadsheet:
-       * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-       */
-
-       function Start()
-       {
-        gapi.client.sheets.spreadsheets.values.get({spreadsheetId: '1CcAqJT0d1mPRO5NoKcYT-30nfDYJkZYhUrtE0fm5vF4', range: '1!A1:C',}).then(function(response)
+        gapi.client.sheets.spreadsheets.values.get({spreadsheetId: '1CcAqJT0d1mPRO5NoKcYT-30nfDYJkZYhUrtE0fm5vF4', range: roomID + '!A1:C',}).then(function(response)
         {
           
           // New message index...
@@ -182,43 +154,69 @@
           var body = {values: values};
 
           // Send new...
-          gapi.client.sheets.spreadsheets.values.update({spreadsheetId: '1CcAqJT0d1mPRO5NoKcYT-30nfDYJkZYhUrtE0fm5vF4', range: '1!A' + index + ':C', valueInputOption: 'RAW', resource: body}).then((response) => {var result = response.result;});
+          gapi.client.sheets.spreadsheets.values.update({spreadsheetId: '1CcAqJT0d1mPRO5NoKcYT-30nfDYJkZYhUrtE0fm5vF4', range: roomID + '!A' + index + ':C', valueInputOption: 'RAW', resource: body}).then((response) => {var result = response.result;});
         }, 
-        function(response) {appendPre('Error: ' + response.result.error.message);});
+        function(response) {});
+ 
+        // Start Uptade...
         Update();
        }
-      var lastIndex = 0;
-      function Update() {
-        gapi.client.sheets.spreadsheets.values.get({
-          spreadsheetId: '1CcAqJT0d1mPRO5NoKcYT-30nfDYJkZYhUrtE0fm5vF4',
-          range: '1!A2:C',
-        }).then(function(response) {
+
+      // Like in UNITY 3D <3
+      function Update() 
+      {
+        
+        gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: '1CcAqJT0d1mPRO5NoKcYT-30nfDYJkZYhUrtE0fm5vF4', range: roomID + '!A2:C',}).then(function(response) 
+        {
+        
+          // Get all messages...
           var range = response.result;
-          if (range.values.length > 0) {
+          
+          if (range.values.length > 0) 
+          {
+          
+            // Clear text area...
+            document.getElementById("chat_text").innerHTML ="";
 
-            for (; lastIndex < range.values.length; lastIndex++) {
-              var row = range.values[lastIndex];
+            
+            // Varible...
+            var i;
+
+            // Write everything...
+            for (i = 0; i < range.values.length; i++) 
+            {
+              
+              var row = range.values[i];
            
-              document.getElementById("chat_text").innerHTML += "[" + row[0] + "] " + row[1] + ": " + row[2] + "<br />";
-  
-            }
-          } else {
-            appendPre('No data found.');
-          }
-        }, function(response) {
-          appendPre('Error: ' + response.result.error.message);
-        });
+              if(row[0])
+                row[0] = "[" + row[0] + "] ";
 
-        setTimeout(function(){
-  Update();
-},3000);
+              if(row[1])
+                row[1] = row[1] + ": ";
+
+              // Write...              
+              document.getElementById("chat_text").innerHTML += row[0] + row[1] + row[2] + "<br />";
+            }
+          } 
+        }, function(response) {});
+
+        // Reapeat this every 2 sec...
+        setTimeout(
+          function()
+          {
+           
+            Update();
+          }, 2000);
       }
 
+
+
+      // Send Message...
       function Send()
       {
 
         // Get old one...
-        gapi.client.sheets.spreadsheets.values.get({spreadsheetId: '1CcAqJT0d1mPRO5NoKcYT-30nfDYJkZYhUrtE0fm5vF4', range: '1!A1:C',}).then(function(response)
+        gapi.client.sheets.spreadsheets.values.get({spreadsheetId: '1CcAqJT0d1mPRO5NoKcYT-30nfDYJkZYhUrtE0fm5vF4', range: roomID + '!A1:C',}).then(function(response)
         {
           
           // New message index...
@@ -229,12 +227,22 @@
           var body = {values: values};
 
           // Send new...
-          gapi.client.sheets.spreadsheets.values.update({spreadsheetId: '1CcAqJT0d1mPRO5NoKcYT-30nfDYJkZYhUrtE0fm5vF4', range: '1!A' + index + ':C', valueInputOption: 'RAW', resource: body}).then((response) => {var result = response.result;});
+          gapi.client.sheets.spreadsheets.values.update({spreadsheetId: '1CcAqJT0d1mPRO5NoKcYT-30nfDYJkZYhUrtE0fm5vF4', range: roomID + '!A' + index + ':C', valueInputOption: 'RAW', resource: body}).then((response) => {var result = response.result;});
         }, 
-        function(response) {appendPre('Error: ' + response.result.error.message);});
+        function(response) {});
       }
 
 
+
+      // Change room...      
+      function ChangeRoom(ID)
+      {
+
+        roomID = ID;
+        document.getElementById("room_name").innerHTML = "Room #" + roomID;
+      }
+
+      // Return Time (HH:MM:SS)
       function Time()
       {
 
@@ -272,7 +280,10 @@
       }
     </script>
 
+    
+    <!-- THIS WAS HERE ALL THE TIME -->
     <script async defer src="https://apis.google.com/js/api.js"
+    
       onload="this.onload=function(){};handleClientLoad()"
       onreadystatechange="if (this.readyState === 'complete') this.onload()">
     </script>

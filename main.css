@@ -1,0 +1,319 @@
+body {
+  
+  margin-left: 0px;
+  padding: 0;
+
+
+  background-color: #1b1c20;
+
+
+  font-family: Helvetica, sans-serif;
+}
+
+h1 {
+
+  margin-left: 200px;
+  
+  
+  font-size: 55px;
+}
+h3 {
+
+  margin-top: 25px;
+  margin-left: 25px;
+
+  color: #c5c6c7;
+
+
+  text-align: center;
+  text-align: left;
+
+  font-size: 25px;
+} 
+h4 {
+  
+  margin: 7px;
+  padding: 0px;
+  
+  cursor: pointer;
+}
+
+textarea {
+
+  resize: none;
+}
+textarea:focus{
+
+  outline: none;
+}
+button:focus{
+
+  outline: none;
+}
+
+
+
+#name_field:focus {
+   
+  color: #45a29e;
+  outline: none;  
+}
+#name_field::selection, #message_field::selection, h4::selection, div::selection, h3::selection {
+  
+  color: #1f2833;
+  background: #45a29e
+}
+#name_field::-moz-selection, #message_field::-moz-selection, h4::-moz-selection, div::-moz-selection, h3::-moz-selection {
+ 
+  color: #1f2833;
+  background: #45a29e
+}
+
+
+
+#login_background{
+
+  position: fixed;
+
+  width: 100%;
+  height: 100%;
+
+   
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+
+  background-color: #1b1c20;
+
+
+  z-index: 2;
+  display: block;
+}
+#login_window {
+
+  position: fixed;
+  
+  width: 450px;
+  height: 300px;
+
+  top: 50%;
+  left: 50%;
+
+  margin: 0;
+  margin-right: -50%;
+
+
+  background: #1f2833;
+
+
+  border:solid;
+  border-color: #45a29e;
+
+  border-width: 2px;
+  border-radius: 10px;
+
+
+  transform: translate(-50%, -50%) 
+}
+#name_field {  
+ 
+  position: fixed;
+ 
+  width: 300px;
+  height: 30px;
+
+  top: 20%;
+  left: 50%;
+
+  margin-right: -50%;
+
+
+  color: #45a29e;
+  background-color: #1f2833;
+ 
+ 
+  border-width: 0px;
+  border-bottom-width: 2px;
+  border-color: #45a29e;
+
+
+  text-align: center;
+  font-size: 25px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+  transform: translate(-50%, -50%) 
+}
+
+
+#authorize_button {
+
+  margin-left: 190px;
+  margin-top: 100px;
+
+  content:url(images/google-default.png);
+}
+#authorize_button:hover {
+ 
+  content:url(images/google-focus.png);
+}
+#authorize_button:active {
+  
+  content:url(images/google-press.png);
+}
+
+
+.left_bar {
+  
+  position: fixed;
+
+  width: 325px;
+  height: 100%;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+   
+  background: rgb(18,18,18);
+  background: linear-gradient(180deg, rgba(18,18,18,1) 0%, rgba(31,40,51,1) 12.5%, rgba(31,40,51,1) 100%);
+  
+
+  border: solid;
+  border-color: #45a29e;
+
+  border-width: 0;
+  border-right-width: 2px;
+}
+
+
+.room_name {
+
+  
+  position: fixed;
+
+  width: 325px;
+  height: 60px;
+  
+
+  background-color: #1A232E;
+
+
+  font-weight: bold;
+}
+.room_list {
+
+  margin-top: 100px;
+  margin-left: 40px;
+
+
+  color: #c5c6c7;
+
+
+  font-weight: bold;
+  font-size: 20px;
+  
+}
+#chat_rooms {
+
+  width:  20px;
+  height: 100%;
+
+    
+  background-color: #2b3f4e;
+}
+
+#chat_main {
+
+  width: 100%;
+  height: 100%;
+  
+  margin:0;
+  padding: 0;
+}
+#chat_text { 
+  
+  height: 70%;
+  width: 1370px;
+
+  top:0;
+
+
+  margin-left: 350px;
+  margin-bottom: 110px;
+
+
+  color: #c5c6c7;
+
+
+  font-size: 20px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#message_field {
+
+  position: fixed;
+
+  height: 90px;
+  width: 1270px;
+  
+  bottom: 0px;
+  
+  margin-bottom: 0px;
+  margin-left: 325px;
+  margin-right: 325px;
+
+  padding: 0px;
+  padding-left: 10px;
+  padding-top: 10px;
+
+  color: #c5c6c7;
+  background-color:  #2b3f4e;
+  
+
+  border-width: 2px;
+  border-bottom-width: 0px;
+  border-color: #45a29e;
+
+
+  font-size: 20px;
+  font-family: Geneva, Verdana, sans-serif;
+
+  resize: none;
+}
+ 
+#send_button {
+ 
+  position: fixed;
+
+  width: 325px;
+  height: 102px;
+  
+  left: 1597px;
+  bottom:0;
+
+  margin-bottom: 0px;
+  padding: 0px;
+
+
+  color: #c5c6c7;
+  background-color: #2b3f4e;
+
+
+  font-size: 30px;
+  font-weight: bold;
+  font-family: Verdana, sans-serif;
+
+
+  border-width: 2px;
+  border-bottom-width: 0px;
+  border-color: #45a29e;
+}
+#send_button:active {
+  
+  color: #a5a6a7;
+  background-color: #1f2833;
+  
+  border-style: outset;
+}
