@@ -1,22 +1,14 @@
 <!DOCTYPE html>
 <html>
-
   <head>
-  
-    <!-- METAMFETAMINA... -->
     <meta name="google-signin-client_id" content="911501730838-bs4m99gglnc6568ds4teu3pl2g6mi63v.apps.googleusercontent.com">
     <meta charset="utf-8" />
     
-    <!-- LINA DO CSKA -->
     <link href="main.css" rel="stylesheet" type="text/css">
 
-
-    <!-- TYTULIK <3 -->
     <title>Google Spreadsheets Chat</title>
   </head>
   <body>
-
-    <!-- LOGIN WINDOW -->
     <div id="login_background">
      
       <div id="login_window"> 
@@ -26,89 +18,69 @@
       </div>
     </div>
 
-
-
-    <!-- LEFT -->
     <div class="left_bar">
-
-      <!-- NAZWY POKOI -->
-      <div class="room_name"> <h3 id="room_name">Room #1</h3> </div>
-      
-
-      <!-- LISTA POKOI -->
+      <div class="room_name"> <h3 id="room_name"> Main </h3> </div>
       <div class="room_list"> 
-
-        <h4 onclick="ChangeRoom(1);"> Room #1 </h4>  
-        <h4 onclick="ChangeRoom(2);"> Room #2 </h4> 
-        <h4 onclick="ChangeRoom(3);"> Room #3 </h4> 
-        <h4 onclick="ChangeRoom(4);"> Room #4 </h4> 
+        <h4 onclick="ChangeRoom(1);"> Main </h4>  
+        <h4 onclick="ChangeRoom(2);"> Linux Server </h4> 
+        <h4 onclick="ChangeRoom(3);"> Sąd Internetowy </h4> 
+        <h4 onclick="ChangeRoom(4);"> Adventure Time </h4> 
       </div>
-    </div>
+    </div>  
 
-    <!-- CHAT -->
     <div id="chat_main">
-
-      <!-- DIV NA TEKST -->
       <div id="chat_text"> </div>
       
-
-      <!-- WYSYŁANKO -->
-      <textarea id="message_field" type="text" name="name"></textarea>
+      <textarea id="message_field" type="text" name="name" onkeypress="return getKey(event)"></textarea>
       <button id="send_button" onclick="Send();">Send</button>
     </div>
-  
 
+   
 
-    <!-- SCRIPTS, SCRIPTOS, SCRIPTINTOS??? -->
-    <pre id="content" style="white-space: pre-wrap;"> </pre>
     <script src="https://apis.google.com/js/platform.js" async defer> </script>
     <script type="text/javascript">
          
-      //#region I copped it from Goole Website and I don't know what is happening here >:L
+      var roomsName = ["Main", "Linux Server", "Sąd Internetowy", "Adventure Time"]
+      var spreadSheet = '1CcAqJT0d1mPRO5NoKcYT-30nfDYJkZYhUrtE0fm5vF4'; 
+
+      var message_field = document.getElementById("message_field");
+      var roomName = document.getElementById('room_name');
+      var chatText = document.getElementById("chat_text");
+    
+      //#region Google Stuffs...
       
-        // Client ID and API key from the Developer Console
         var CLIENT_ID = '911501730838-bs4m99gglnc6568ds4teu3pl2g6mi63v.apps.googleusercontent.com';
         var API_KEY = 'AIzaSyAKTVIb-0x3YM-5WomvHfgbndtVeRDUYQE';
 
-        // Array of API discovery doc URLs for APIs used by the quickstart
         var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
 
-        // Authorization scopes required by the API; multiple scopes can be
-        // included, separated by spaces.
         var SCOPES = "https://www.googleapis.com/auth/spreadsheets";
 
-        // Authorize button...
+
         var authorizeButton = document.getElementById('authorize_button');
 
 
-        // Load liblary...
-        function handleClientLoad() 
-      {
-      
-        gapi.load('client:auth2', initClient);
-      }
 
-        // Set up sign in state...
+        function handleClientLoad() 
+        {
+      
+          gapi.load('client:auth2', initClient);
+        }
         function initClient() 
         {
           
-          gapi.client.init({apiKey: API_KEY, clientId: CLIENT_ID, discoveryDocs: DISCOVERY_DOCS, scope: SCOPES}).then(function () 
+          gapi.client.init({apiKey: API_KEY, clientId: CLIENT_ID, discoveryDocs: DISCOVERY_DOCS, scope: SCOPES})
+          .then(function () 
           {
-           
-            // Listen for sign-in state changes.
+
             gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
-            // Handle the initial sign-in state.
+
             updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
             authorizeButton.onclick = handleAuthClick;
-          }, 
-          
-        function(error){});
-      }
+          }); 
+        }
 
-
-
-        // Sign In things...
         function updateSigninStatus(isSignedIn) 
         {
           
@@ -118,6 +90,8 @@
             authorizeButton.style.display = 'none';
             document.getElementById("login_background").style.display = 'none';
 
+    
+            name = document.getElementById("name_field").value;
             Start();
           }
           else
@@ -134,115 +108,105 @@
         }
       //#endregion
 
-
-      // Room ID...  
+      var name;
       var roomID = 1;
       
-      
-      // Start Chat...
+
+
       function Start()
       {
 
-        gapi.client.sheets.spreadsheets.values.get({spreadsheetId: '1CcAqJT0d1mPRO5NoKcYT-30nfDYJkZYhUrtE0fm5vF4', range: roomID + '!A1:C',}).then(function(response)
-        {
-          
-          // New message index...
-          var index = response.result.values.length + 1;
-
-
-          var values = [[ Time() , document.getElementById("name_field").value, "*enters*"],];
-          var body = {values: values};
-
-          // Send new...
-          gapi.client.sheets.spreadsheets.values.update({spreadsheetId: '1CcAqJT0d1mPRO5NoKcYT-30nfDYJkZYhUrtE0fm5vF4', range: roomID + '!A' + index + ':C', valueInputOption: 'RAW', resource: body}).then((response) => {var result = response.result;});
-        }, 
-        function(response) {});
- 
-        // Start Uptade...
         Update();
-       }
-
-      // Like in UNITY 3D <3
+      }
       function Update() 
       {
         
-        gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: '1CcAqJT0d1mPRO5NoKcYT-30nfDYJkZYhUrtE0fm5vF4', range: roomID + '!A2:C',}).then(function(response) 
+        Refresh(false);
+        setTimeout(function() {Update();}, 1500);
+      }
+
+
+      function ChangeRoom(ID)
+      {
+
+        if(ID == roomID)
+          return;
+        
+        
+
+        roomID = ID;
+        roomName.innerHTML = roomsName[ID - 1];
+
+        Refresh(true);
+      }
+  
+      function Send()
+      {
+
+        gapi.client.sheets.spreadsheets.values.get({spreadsheetId: spreadSheet, range: roomID + '!A1:C',})
+        .then(function(response)
+        {
+          
+          var index = response.result.values.length + 1;
+
+
+          var values = [[ Time() , name,  document.getElementById("message_field").value],];
+          var body = {values: values};
+
+         
+          gapi.client.sheets.spreadsheets.values.update({spreadsheetId: spreadSheet, range: roomID + '!A' + index + ':C'  + index, valueInputOption: 'RAW', resource: body})
+          .then((response) => {var result = response.result;})
+          .then(function(){ message_field.value = ""; });
+        });
+      }
+      function Refresh(force)
+      {
+       
+        gapi.client.sheets.spreadsheets.values.get({ spreadsheetId: spreadSheet, range: roomID + '!A2:C',})
+        .then(function(response) 
         {
         
-          // Get all messages...
           var range = response.result;
-          
+
+
           if (range.values.length > 0) 
           {
-          
-            // Clear text area...
-            document.getElementById("chat_text").innerHTML ="";
 
-            
-            // Varible...
+            chatText.innerHTML = "";
             var i;
 
-            // Write everything...
+
             for (i = 0; i < range.values.length; i++) 
             {
               
               var row = range.values[i];
-           
+
+
               if(row[0])
                 row[0] = "[" + row[0] + "] ";
 
               if(row[1])
                 row[1] = row[1] + ": ";
 
-              // Write...              
-              document.getElementById("chat_text").innerHTML += row[0] + row[1] + row[2] + "<br />";
+
+              chatText.innerHTML += row[0] + row[1] + row[2] + "<br />";
             }
           } 
-        }, function(response) {});
-
-        // Reapeat this every 2 sec...
-        setTimeout(
-          function()
-          {
-           
-            Update();
-          }, 2000);
+        })
+        .then(function() { Scroll(force); });
       }
+  
 
-
-
-      // Send Message...
-      function Send()
+      function Scroll(force)
       {
-
-        // Get old one...
-        gapi.client.sheets.spreadsheets.values.get({spreadsheetId: '1CcAqJT0d1mPRO5NoKcYT-30nfDYJkZYhUrtE0fm5vF4', range: roomID + '!A1:C',}).then(function(response)
-        {
-          
-          // New message index...
-          var index = response.result.values.length + 1;
-
-
-          var values = [[ Time() , document.getElementById("name_field").value,  document.getElementById("message_field").value],];
-          var body = {values: values};
-
-          // Send new...
-          gapi.client.sheets.spreadsheets.values.update({spreadsheetId: '1CcAqJT0d1mPRO5NoKcYT-30nfDYJkZYhUrtE0fm5vF4', range: roomID + '!A' + index + ':C', valueInputOption: 'RAW', resource: body}).then((response) => {var result = response.result;});
-        }, 
-        function(response) {});
+       
+        if(force)
+          chatText.scrollTo(0, chatText.scrollHeight)
+      
+        else if(chatText.scrollTop > chatText.scrollHeight - 900)
+          chatText.scrollTo(0, chatText.scrollHeight);
       }
-
-
-
-      // Change room...      
-      function ChangeRoom(ID)
-      {
-
-        roomID = ID;
-        document.getElementById("room_name").innerHTML = "Room #" + roomID;
-      }
-
-      // Return Time (HH:MM:SS)
+    
       function Time()
       {
 
@@ -250,7 +214,6 @@
         var time = "";
 
 
-        // Hours...
         if(today.getHours() < 10)
           time += "0" + today.getHours();
 
@@ -258,7 +221,6 @@
           time += today.getHours();
 
 
-        // Minutes...
         if(today.getMinutes() < 10)
           time += ":0" + today.getMinutes();
 
@@ -266,21 +228,26 @@
           time +=  ":" + today.getMinutes()
 
 
-        // Seconds...
         if(today.getSeconds() < 10)
           time += ":0" + today.getSeconds();
 
         else 
           time += ":" + today.getSeconds();
-        
 
 
-        // RETURN!!!
+
         return time;
+      }
+      function getKey(key)
+      {
+      
+        if(key.keyCode === 13)
+          Send();
       }
     </script>
 
-    
+
+
     <!-- THIS WAS HERE ALL THE TIME -->
     <script async defer src="https://apis.google.com/js/api.js"
     

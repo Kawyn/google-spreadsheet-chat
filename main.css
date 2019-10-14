@@ -1,5 +1,5 @@
 body {
-  
+  margin-top: 0px;
   margin-left: 0px;
   padding: 0;
 
@@ -12,7 +12,7 @@ body {
 
 h1 {
 
-  margin-left: 200px;
+  margin-left: 7.5%;
   
   
   font-size: 55px;
@@ -168,7 +168,7 @@ button:focus{
   
   position: fixed;
 
-  width: 325px;
+  width: 17.5%;
   height: 100%;
 
   top: 0;
@@ -193,7 +193,7 @@ button:focus{
   
   position: fixed;
 
-  width: 325px;
+  width: 17.5%;
   height: 60px;
   
 
@@ -217,7 +217,7 @@ button:focus{
 }
 #chat_rooms {
 
-  width:  20px;
+  width:  5%;
   height: 100%;
 
     
@@ -233,17 +233,17 @@ button:focus{
   padding: 0;
 }
 #chat_text { 
-  
-  height: 70%;
-  width: 1370px;
+ 
+  height: 84vh;
+  width: 81.5%;
 
-  top:0;
-
-
-  margin-left: 350px;
-  margin-bottom: 110px;
+ padding-left: 10px;
+ padding-bottom: 10px;
+  margin-left: 18%;
 
 
+  overflow: auto;
+   overflow-x: hidden;
   color: #c5c6c7;
 
 
@@ -255,18 +255,18 @@ button:focus{
 
   position: fixed;
 
-  height: 90px;
-  width: 1270px;
+  height: 15%;
+  width: 65.1%;
   
   bottom: 0px;
   
   margin-bottom: 0px;
-  margin-left: 325px;
-  margin-right: 325px;
+  margin-left: 17.5%;
+  margin-right:  17.4%;
 
-  padding: 0px;
-  padding-left: 10px;
-  padding-top: 10px;
+padding: 10px;
+box-sizing: border-box;
+
 
   color: #c5c6c7;
   background-color:  #2b3f4e;
@@ -280,17 +280,17 @@ button:focus{
   font-size: 20px;
   font-family: Geneva, Verdana, sans-serif;
 
-  resize: none;
+
 }
  
 #send_button {
  
   position: fixed;
 
-  width: 325px;
-  height: 102px;
-  
-  left: 1597px;
+  width:  17.5%;
+
+  height: 15%;
+  right: 0;
   bottom:0;
 
   margin-bottom: 0px;
@@ -316,4 +316,25 @@ button:focus{
   background-color: #1f2833;
   
   border-style: outset;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #1A232E; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #45a29e; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #45a29e; 
 }
