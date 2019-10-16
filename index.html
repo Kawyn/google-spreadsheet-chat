@@ -43,7 +43,7 @@
       var roomsName = ["Main", "Linux Server", "Sąd Internetowy", "Adventure Time"]
       var spreadSheet = '1CcAqJT0d1mPRO5NoKcYT-30nfDYJkZYhUrtE0fm5vF4'; 
 
-      var message_field = document.getElementById("message_field");
+      var messageField = document.getElementById("message_field");
       var roomName = document.getElementById('room_name');
       var chatText = document.getElementById("chat_text");
     
@@ -142,6 +142,13 @@
   
       function Send()
       {
+
+        if(messageField.valeu.include('<')
+        {
+
+          alert("Inwalidyczny znak (<)");
+          return;
+        }
 
         gapi.client.sheets.spreadsheets.values.get({spreadsheetId: spreadSheet, range: roomID + '!A1:C',})
         .then(function(response)
