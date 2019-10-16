@@ -110,7 +110,10 @@
 
       var name;
       var roomID = 1;
-      
+      var lastIndex = 0;
+
+      // Commands...
+      var banner = false;
 
 
       function Start()
@@ -122,7 +125,7 @@
       {
         
         Refresh(false);
-        setTimeout(function() {Update();}, 1500);
+        setTimeout(function() { Update(); }, 1500);
       }
 
 
@@ -135,6 +138,7 @@
         
 
         roomID = ID;
+        lastIndex = 0;
         roomName.innerHTML = roomsName[ID - 1];
 
         Refresh(true);
@@ -143,21 +147,38 @@
       function Send()
       {
 
-        if(messageField.valeu.include('<'))
+        // Stop spaming HTML!!!         
+        if(messageField.value.includes('<'))
         {
 
-          alert("Inwalidyczny znak (<)");
-          return;
+          alert("Please Stop It... (\" < \" is Invalidą)");
+          return;   
         }
+
+
+
+
+        var message = Message();
 
         gapi.client.sheets.spreadsheets.values.get({spreadsheetId: spreadSheet, range: roomID + '!A1:C',})
         .then(function(response)
         {
           
           var index = response.result.values.length + 1;
+          var values;
 
-
-          var values = [[ Time() , name,  document.getElementById("message_field").value],];
+          if(banner)  
+          {
+          
+            index = 2;
+            banner = false;
+            values = [[ "", "", message],];
+          }
+          else
+          {
+            
+            values = [[ Time() , name, message],];
+          }
           var body = {values: values};
 
          
@@ -174,19 +195,20 @@
         {
         
           var range = response.result;
-
+          
+      
 
           if (range.values.length > 0) 
           {
 
-            chatText.innerHTML = "";
-            var i;
+          
+        
 
 
-            for (i = 0; i < range.values.length; i++) 
+            for (; lastIndex < range.values.length; lastIndex++) 
             {
               
-              var row = range.values[i];
+              var row = range.values[lastIndex];
 
 
               if(row[0])
@@ -245,11 +267,55 @@
 
         return time;
       }
+      function Message()
+      {
+
+        var newMessage = "";
+
+        if(messageField.value.charAt(0) == ':')
+        {
+
+          var command = messageField.value.split(':')[1];
+          command = command.split(' ')[0];
+
+          
+          if(command == 'banner')
+          {
+            
+            banner = true;
+            newMessage = messageField.value.substring(8, messageField.value.length);
+          }
+          else if(command == 'img')
+          {
+
+            newMessage = '<img src=\"' + messageField.value.substring(5, messageField.value.length) + '\">';
+          }
+          else if(command == 'youtube')
+          {
+
+            newMessage = '<iframe width=\"640\" height=\"480\" src=\"https://www.youtube.com/embed/' +  messageField.value.substring(41, messageField.value.length) + '\" frameborder=\"0\" allow=\"accelerometer; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>';
+          }
+          else if(command == 'title')
+          {
+
+            newMessage = '<h1>' + messageField.value.substring(7, messageField.value.length) + '</h1>';
+          }
+        }
+
+
+        newMessage = messageField.value.replace(/:new/g, '<br />');
+        return newMessage;
+      }
+      
       function getKey(key)
       {
       
-        if(key.keyCode === 13)
+        if(key.keyCode == 13)
+        {  
+
+          key.preventDefault();
           Send();
+        }
       }
     </script>
 
