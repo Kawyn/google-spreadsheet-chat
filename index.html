@@ -270,7 +270,7 @@
       function Message()
       {
 
-        var newMessage = "";
+        var newMessage = messageField.value;
 
         if(messageField.value.charAt(0) == ':')
         {
@@ -300,10 +300,11 @@
 
             newMessage = '<h1>' + messageField.value.substring(7, messageField.value.length) + '</h1>';
           }
+          
+          newMessage = newMessage.replace(/:new/g, '<br />');
         }
 
-
-        newMessage = messageField.value.replace(/:new/g, '<br />');
+   
         return newMessage;
       }
       
